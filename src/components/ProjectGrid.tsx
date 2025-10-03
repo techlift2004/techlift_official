@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ExternalLink, Github, Video, Calendar, Trophy, Zap } from 'lucide-react';
+import { Github, Video, Calendar, Trophy, Zap } from 'lucide-react';
 import { supabase, type Project } from '../lib/supabase';
 
 type EventType = 'hackathon' | 'daily' | 'weekly';
@@ -58,6 +58,8 @@ export function ProjectGrid({ selectedEvent, refreshTrigger }: ProjectGridProps)
         return Zap;
       case 'weekly':
         return Calendar;
+      default:
+        return Trophy; // fallback icon
     }
   };
 
@@ -114,7 +116,9 @@ export function ProjectGrid({ selectedEvent, refreshTrigger }: ProjectGridProps)
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute top-4 right-4">
               <div className="flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-sm border border-green-500/30 rounded-full">
-                <EventIcon className={`w-4 h-4 ${getEventColor(selectedEvent)}`} />
+                {EventIcon && (
+                  <EventIcon className={`w-4 h-4 ${getEventColor(selectedEvent)}`} />
+                )}
                 <span className="text-xs font-medium text-gray-300 capitalize">
                   {selectedEvent}
                 </span>
